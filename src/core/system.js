@@ -486,7 +486,7 @@ function wrapWithTryCatch(fn, {
     try {
       return fn.call(this, ...args)
     } catch(e) {
-      if(logErrors) {
+      if(logErrors) { 
         console.error(e)
       }
       return null

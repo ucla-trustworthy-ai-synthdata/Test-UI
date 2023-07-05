@@ -23,7 +23,6 @@ export default class TryItOutButton extends React.Component {
 
   render() {
     const { onTryoutClick, onCancelClick, onResetClick, enabled, hasUserEditedBody, isOAS3 } = this.props
-
     const showReset = isOAS3 && hasUserEditedBody
     return (
       <div className={showReset ? "try-out btn-group" : "try-out"}>
@@ -36,6 +35,7 @@ export default class TryItOutButton extends React.Component {
           showReset && <button className="btn try-out__btn reset" onClick={ onResetClick }>Reset</button>
         }
       </div>
+      
     )
   }
 }

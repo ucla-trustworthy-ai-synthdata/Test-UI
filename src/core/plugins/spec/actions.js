@@ -30,6 +30,7 @@ export const UPDATE_RESOLVED = "spec_update_resolved"
 export const UPDATE_RESOLVED_SUBTREE = "spec_update_resolved_subtree"
 export const SET_SCHEME = "set_scheme"
 
+
 const toStr = (str) => isString(str) ? str : ""
 
 export function updateSpec(spec) {
@@ -530,3 +531,4 @@ export function setScheme (scheme, path, method) {
     payload: { scheme, path, method }
   }
 }
+

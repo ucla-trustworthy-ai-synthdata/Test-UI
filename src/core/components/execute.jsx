@@ -1,6 +1,15 @@
-import React, { Component } from "react"
+import React, { Component, useEffect } from "react"
 import PropTypes from "prop-types"
 
+export let instances = []
+export const getInstances = () =>{
+  return instances
+}
+
+export const resetInstances = () =>{
+  while (instances.length)
+    instances.pop()
+}
 export default class Execute extends Component {
 
   static propTypes = {
@@ -14,7 +23,11 @@ export default class Execute extends Component {
     onExecute: PropTypes.func,
     disabled: PropTypes.bool
   }
-
+  
+  constructor() {
+    super()
+    instances.push(this)
+  }
   handleValidateParameters = () => {
     let { specSelectors, specActions, path, method } = this.props
     specActions.validateParams([path, method])
@@ -83,19 +96,26 @@ export default class Execute extends Component {
     }
   }
 
+
   onClick = () => {
     let paramsResult = this.handleValidateParameters()
     let requestBodyResult = this.handleValidateRequestBody()
     let isPass = paramsResult && requestBodyResult
     this.handleValidationResult(isPass)
+    return isPass
   }
 
   onChangeProducesWrapper = ( val ) => this.props.specActions.changeProducesValue([this.props.path, this.props.method], val)
 
+  //componentDidMount(){
+    //if(result){
+      //setTimeout(this.onClick(),500)
+    //}
+  //}
   render(){
     const { disabled } = this.props
     return (
-        <button className="btn execute opblock-control__btn" onClick={ this.onClick } disabled={disabled}>
+        <button className="btn execute opblock-control__btn" onClick={ this.onClick}  disabled={disabled}>
           Execute
         </button>
     )

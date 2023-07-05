@@ -24,7 +24,6 @@ export default class Operations extends React.Component {
     } = this.props
 
     const taggedOps = specSelectors.taggedOperations()
-
     if(taggedOps.size === 0) {
       return <h3> No operations defined in spec!</h3>
     }

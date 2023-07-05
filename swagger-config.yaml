@@ -1,4 +1,4 @@
 ---
-url: "https://petstore.swagger.io/v2/swagger.json"
+url: "http://184.169.254.62:5678/js/api-docs"
 dom_id: "#swagger-ui"
 validatorUrl: "https://validator.swagger.io/validator"

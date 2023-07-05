@@ -1,6 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { resetInstances } from "../components/execute"
+import { resetToggleInstances } from "../components/operation-summary"
+import { resetAlltest } from "../components/auth/authorize-btn"
 
+export let currentURL;
 export default class InfoContainer extends React.Component {
 
   static propTypes = {
@@ -9,6 +13,18 @@ export default class InfoContainer extends React.Component {
     getComponent: PropTypes.func.isRequired,
     oas3Selectors: PropTypes.func.isRequired,
   }
+  componentDidMount(){
+    if(!currentURL){
+      currentURL = this.props.specSelectors.url()
+    }
+    else if(currentURL != this.props.specSelectors.url()){
+      resetAlltest()
+      resetInstances()
+      resetToggleInstances()
+      currentURL = this.props.specSelectors.url()
+    }
+  }
+
 
   render () {
     const {specSelectors, getComponent, oas3Selectors} = this.props
@@ -22,6 +38,7 @@ export default class InfoContainer extends React.Component {
 
     const Info = getComponent("info")
 
+    
     return (
       <div>
         {info && info.count() ? (

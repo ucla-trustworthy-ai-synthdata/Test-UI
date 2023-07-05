@@ -5,6 +5,13 @@ import ImPropTypes from "react-immutable-proptypes"
 import toString from "lodash/toString"
 
 
+export let toggleInstances = []
+
+export const resetToggleInstances = () =>{
+  while (toggleInstances.length)
+    toggleInstances.pop()
+}
+
 export default class OperationSummary extends PureComponent {
 
   static propTypes = {
@@ -16,6 +23,7 @@ export default class OperationSummary extends PureComponent {
     getConfigs: PropTypes.func.isRequired,
     authActions: PropTypes.object,
     authSelectors: PropTypes.object,
+    toggle: PropTypes.func
   }
 
   static defaultProps = {
@@ -24,6 +32,21 @@ export default class OperationSummary extends PureComponent {
     summary: ""
   }
 
+  constructor(){
+    super()
+    this.Shown = null
+    toggleInstances.push(this)
+  }
+
+  isShown(){
+    return this.Shown
+  }
+
+  Toggle(){
+    let {toggleShown} = this.props
+    toggleShown()
+    this.Shown = !this.Shown
+  }
   render() {
 
     let {
@@ -36,6 +59,8 @@ export default class OperationSummary extends PureComponent {
       specPath,
     } = this.props
 
+    if (this.Shown == null)
+      this.Shown = isShown
     let {
       summary,
       isAuthorized,
@@ -69,7 +94,7 @@ export default class OperationSummary extends PureComponent {
           aria-label={`${method} ${path.replace(/\//g, "\u200b/")}`}
           aria-expanded={isShown}
           className="opblock-summary-control"
-          onClick={toggleShown}
+          onClick={() => this.Toggle(toggleShown)}
         >
           <OperationSummaryMethod method={method} />
           <OperationSummaryPath getComponent={getComponent} operationProps={operationProps} specPath={specPath} />
