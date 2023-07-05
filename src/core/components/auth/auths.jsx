@@ -20,7 +20,6 @@ export default class Auths extends React.Component {
 
   onAuthChange =(auth) => {
     let { name } = auth
-
     this.setState({ [name]: auth })
   }
 

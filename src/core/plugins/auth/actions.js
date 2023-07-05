@@ -274,8 +274,6 @@ export function restoreAuthorization(payload) {
 export const persistAuthorizationIfNeeded = () => ( { authSelectors, getConfigs } ) => {
   const configs = getConfigs()
 
-  if (!configs.persistAuthorization) return
-
   // persist authorization to local storage
   const authorized = authSelectors.authorized().toJS()
   localStorage.setItem("authorized", JSON.stringify(authorized))
