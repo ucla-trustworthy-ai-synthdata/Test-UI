@@ -1,5 +1,7 @@
 import React, { cloneElement } from "react"
 import PropTypes from "prop-types"
+import { instances, resetInstances } from "../../core/components/execute"
+import { resetToggleInstances } from "../../core/components/operation-summary"
 
 //import "./topbar.less"
 import {parseSearch, serializeSearch} from "../../core/utils"
@@ -13,7 +15,8 @@ export default class Topbar extends React.Component {
 
   constructor(props, context) {
     super(props, context)
-    this.state = { url: props.specSelectors.url(), selectedIndex: 0 }
+    this.URLS = ["https://www.trusetics.com:5678/js/api-docs","https://petstore.swagger.io/v2/swagger.json"]
+    this.state = { url: this.URLS[0], selectedIndex: 0 }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -103,7 +106,11 @@ export default class Topbar extends React.Component {
       this.loadSpec(urls[targetIndex].url)
     }
   }
-
+  componentDidUpdate(prevProps, prevState){
+    if (this.state.url != prevState.url){
+      this.loadSpec(this.state.url)
+    }
+  }
   onFilterChange =(e) => {
     let {target: {value}} = e
     this.props.layoutActions.updateFilter(value)
@@ -142,7 +149,12 @@ export default class Topbar extends React.Component {
     }
     else {
       formOnSubmit = this.downloadUrl
-      control.push(<input className={classNames.join(" ")} type="text" onChange={ this.onUrlChange } value={this.state.url} disabled={isLoading} />)
+      control.push(           
+      <select onChange={ this.onUrlChange} value={this.state.url}>
+        { this.URLS.map(
+          (url) => <option value={ url } key={ url }>{ url }</option>
+        )}
+      </select>)
       control.push(<Button className="download-url-button" onClick={ this.downloadUrl }>Explore</Button>)
     }
 
