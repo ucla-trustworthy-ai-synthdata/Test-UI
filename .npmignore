@@ -14,3 +14,9 @@
 !dist/swagger-ui.css
 !dist/swagger-ui.css.map
 !dist/oauth2-redirect.html
+!dist/index.html
+!dist/index.css
+!dist/swagger-initializer.js
+!dist/swagger-ui-bundle.js
+!swagger-ui-dist-package/index.js
+!swagger-ui-dist-package/absolute-path.js
